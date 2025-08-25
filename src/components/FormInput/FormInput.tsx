@@ -5,7 +5,7 @@ import clsx from "clsx";
 type InputProps = {
   label: string;
   error?: string;
-  type: 'text'| 'password'
+  type: 'text'| 'password' | 'number'
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const FormInput = forwardRef<HTMLInputElement, InputProps>(

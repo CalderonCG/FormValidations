@@ -1,17 +1,24 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import FormInput from "../FormInput/FormInput";
 import "./Form.scss";
+import {z} from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  city: string;
-  state: string;
-  zip: string;
-};
+const schema = z.object({
+    firstName: z.string().min(1, "First name should not be empty"),
+    lastName: z.string().min(1, "Last name should not be empty"),
+    email: z.email(),
+    password: z.string().min(8).regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number"),
+    passwordConfirm: z.string().min(8),
+    city: z.string(),
+    state: z.string().min(1, "State should not be empty"),
+    zip: z.string().min(4, "Zip code must be 4 digits").max(4, "Zip code must be 4 digits"), 
+})
+
+type FormType = z.infer<typeof schema>
+
+
 
 function Form() {
   const {
@@ -19,9 +26,19 @@ function Form() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormType>();
+    setError
+  } = useForm<FormType>({resolver: zodResolver(schema)});
+
 
   const onSubmit: SubmitHandler<FormType> = (data) => {
+    const match = data.password === data.passwordConfirm
+    if(!match){
+        setError("passwordConfirm",{
+            type:"password",
+            message:"Password must match"
+        })
+        return;
+    }
     console.log(data);
     reset();
   };
@@ -31,23 +48,13 @@ function Form() {
       <div className="form_label">Online event registration</div>
       <div className="form_names">
         <FormInput
-          {...register("firstName", {
-            required: {
-              value: true,
-              message: "Please complete the required fields",
-            },
-          })}
+          {...register("firstName")}
           type="text"
           label="First Name"
           error={errors.firstName?.message}
         />
         <FormInput
-          {...register("lastName", {
-            required: {
-              value: true,
-              message: "Please complete the required fields",
-            },
-          })}
+          {...register("lastName")}
           type="text"
           label="Last Name"
           error={errors.lastName?.message}
@@ -55,34 +62,19 @@ function Form() {
       </div>
 
       <FormInput
-        {...register("email", {
-          required: {
-            value: true,
-            message: "Please complete the required fields",
-          },
-        })}
+        {...register("email")}
         type="text"
         label="Email Address"
         error={errors.email?.message}
       />
       <FormInput
-        {...register("password", {
-          required: {
-            value: true,
-            message: "Please complete the required fields",
-          },
-        })}
+        {...register("password")}
         type="password"
         label="Password"
         error={errors.password?.message}
       />
       <FormInput
-        {...register("passwordConfirm", {
-          required: {
-            value: true,
-            message: "Please complete the required fields",
-          },
-        })}
+        {...register("passwordConfirm")}
         type="password"
         label="Confirm Password"
         error={errors.passwordConfirm?.message}
@@ -91,24 +83,14 @@ function Form() {
       <div className="form_location">
         <FormInput {...register("city")} type="text" label="City" />
         <FormInput
-          {...register("state", {
-            required: {
-              value: true,
-              message: "Please complete the required fields",
-            },
-          })}
+          {...register("state")}
           type="text"
           label="State"
           error={errors.state?.message}
         />
         <FormInput
-          {...register("zip", {
-            required: {
-              value: true,
-              message: "Please complete the required fields",
-            },
-          })}
-          type="text"
+          {...register("zip")}
+          type="number"
           label="Zip Code"
           error={errors.zip?.message}
         />
