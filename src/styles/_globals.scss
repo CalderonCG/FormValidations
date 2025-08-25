@@ -1,0 +1,15 @@
+
+//light-theme
+:root {
+  --background: #f3eae5;
+  --primary: #a46b9e;
+  --secondary: #f9f2fa;
+}
+
+
+//dark-theme
+[data-theme="dark"] {
+  --background: #000000;
+  --primary: #a46b9e;
+  --secondary: #f9f2fa;
+}
