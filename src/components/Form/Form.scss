@@ -4,10 +4,11 @@
 .form {
   @include m.flexCenter(column, start);
   width: clamp(30rem, 90vh, 50rem);
-  background-color: white;
+  background-color: var(--form);
   border-radius: 1rem;
   gap: 1.5rem;
   padding: 3rem;
+  color: var(--font);
 
   &_label {
     width: 100%;
@@ -29,7 +30,7 @@
 
   &_location {
     display: grid;
-    grid-template-columns: 1fr 8rem 10rem;
+    grid-template-columns: 1fr 1fr 10rem;
     width: 100%;
     gap: 1rem;
   }

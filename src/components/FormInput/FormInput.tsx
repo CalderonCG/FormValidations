@@ -4,17 +4,18 @@ import clsx from "clsx";
 
 type InputProps = {
   label: string;
+  placeholder: string;
   error?: string;
   type: 'text'| 'password' | 'number'
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const FormInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, type, error, ...props }, ref) => {
+  ({ label, type, error,placeholder, ...props }, ref) => {
     return (
       <div className='input'>
         <label className="input_label">{label}</label>
         <input className={clsx('input_field', {error_input: error})} ref={ref} {...props} 
-        type={type} placeholder={label} />
+        type={type} placeholder={placeholder} />
         {error && (<p className="input_error">{error}</p>)}
       </div>
     );

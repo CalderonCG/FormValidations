@@ -2,18 +2,23 @@
 //light-theme
 :root {
   --background: #f3eae5;
+  --font: black;
+  --form: white;
   --primary: #a46b9e;
   --secondary: #f9f2fa;
   --outline: #d9d9d9;
   --error: #cc0000;
+
 }
 
 
 //dark-theme
 [data-theme="dark"] {
-  --background: #000000;
+  --background: #181824;
+  --font: #c1c3dc;
+  --form: #25273c;
   --primary: #a46b9e;
-  --secondary: #f9f2fa;
+  --secondary: #181824;
   --outline: #d9d9d9;
   --error: #cc0000;
 }
