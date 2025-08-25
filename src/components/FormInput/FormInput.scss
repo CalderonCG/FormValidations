@@ -18,4 +18,12 @@
         font-size: 0.8rem;
         font-weight: 700;
     }
+
+    &_error{
+        color: red;
+    }
+}
+
+.error_input{
+    border: 0.125rem solid var(--error);
 }
