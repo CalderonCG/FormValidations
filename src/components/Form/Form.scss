@@ -1,0 +1,46 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/variables" as *;
+
+.form {
+  @include m.flexCenter(column, start);
+  width: clamp(30rem, 90vh, 50rem);
+  background-color: white;
+  border-radius: 1rem;
+  gap: 1.5rem;
+  padding: 3rem;
+
+  &_label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--secondary);
+    padding: 1.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+  }
+
+  &_names {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 2rem;
+  }
+
+  &_location {
+    display: grid;
+    grid-template-columns: 1fr 8rem 10rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  &_register {
+    width: 100%;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem;
+    font-weight: 700;
+    border-radius: 0.25rem;
+  }
+}
