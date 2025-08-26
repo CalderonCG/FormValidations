@@ -2,12 +2,13 @@
 @use "../../styles/variables" as *;
 
 .form {
-  @include m.flexCenter(column, start);
-  width: clamp(30rem, 90vh, 50rem);
+  @include m.flexCenter(column, center);
+  width: clamp(40rem, 90vh, 50rem);
+  min-height: 60%;
   background-color: var(--form);
   border-radius: 1rem;
   gap: 1.5rem;
-  padding: 3rem;
+  padding: 2rem 3rem;
   color: var(--font);
 
   &_label {
@@ -30,7 +31,7 @@
 
   &_location {
     display: grid;
-    grid-template-columns: 1fr 1fr 10rem;
+    grid-template-columns: 1fr 1fr 7rem;
     width: 100%;
     gap: 1rem;
   }
