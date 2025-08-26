@@ -2,12 +2,20 @@
 @use "../../styles/variables" as *;
 
 .form {
-  @include m.flexCenter(column, start);
-  width: clamp(30rem, 90vh, 50rem);
-  background-color: white;
+  @include m.flexCenter(column, center);
+  width: clamp(40rem, 90vh, 50rem);
+  min-height: 60%;
+  background-color: var(--form);
   border-radius: 1rem;
   gap: 1.5rem;
-  padding: 3rem;
+  padding: 2rem 3rem;
+  color: var(--font);
+
+  @media (max-width: 730px) {
+    max-width: 100%;
+    padding: 4rem 1rem;
+
+  }
 
   &_label {
     width: 100%;
@@ -25,13 +33,23 @@
     grid-template-columns: 1fr 1fr;
     width: 100%;
     gap: 2rem;
+
+    @media (max-width: 730px){
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &_location {
     display: grid;
-    grid-template-columns: 1fr 8rem 10rem;
+    grid-template-columns: 1fr 1fr 7rem;
     width: 100%;
     gap: 1rem;
+    @media (max-width: 730px){
+      display: flex;
+      flex-direction: column;
+    }
+
   }
 
   &_register {
@@ -42,5 +60,6 @@
     padding: 1rem;
     font-weight: 700;
     border-radius: 0.25rem;
+
   }
 }

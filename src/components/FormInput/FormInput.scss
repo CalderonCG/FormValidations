@@ -10,7 +10,7 @@
         outline: none;
         border: 0.125rem solid var(--outline);
         border-radius: 0.25rem;
-        padding: 1rem 0.5rem;
+        padding: 0.75rem 0.5rem;
         font-size: 1rem;
     }
 
@@ -18,4 +18,12 @@
         font-size: 0.8rem;
         font-weight: 700;
     }
+
+    &_error{
+        color: red;
+    }
+}
+
+.error_input{
+    border: 0.125rem solid var(--error);
 }

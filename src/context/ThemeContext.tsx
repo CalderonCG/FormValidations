@@ -10,7 +10,7 @@ type ThemeContextType = {
 };
 
 //Context initialization-----------------------------
-export const ThemeContext = createContext<ThemeContextType | undefined>({
+export const ThemeContext = createContext<ThemeContextType>({
   theme: "light",
   toggleTheme: () => {},
 });

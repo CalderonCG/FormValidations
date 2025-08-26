@@ -1,0 +1,53 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/variables" as *;
+
+.background_modal {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 50%;
+  z-index: 10;
+}
+
+.modal {
+  @include m.flexCenter(column, start);
+  position: fixed; // mejor que absolute, para que siempre quede fijo al viewport
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(10rem, 90vh, 30rem);
+  background-color: var(--form);
+  border-radius: 1rem;
+  gap: 1.5rem;
+  padding: 3rem;
+  color: var(--font);
+  z-index: 100;
+
+  @media (max-width: 730px) { 
+  @include m.flexCenter(column, center);
+    bottom: 0%;
+    left: 0%;
+    top: auto;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+    transform: none;
+  }
+
+  p{
+    text-align: center;
+  }
+
+  button{
+    width: 100%;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem;
+    font-weight: 700;
+    border-radius: 0.25rem;
+  }
+}

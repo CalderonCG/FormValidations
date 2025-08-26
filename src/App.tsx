@@ -8,6 +8,7 @@ function App() {
   return (
     <>
     <div className='app_container'>
+      <ThemeButton/>
       <Form/>
     </div>
     </>

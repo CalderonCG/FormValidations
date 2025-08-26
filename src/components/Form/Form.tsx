@@ -1,16 +1,54 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import FormInput from "../FormInput/FormInput";
 import "./Form.scss";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
 
-type FormType = {
-  firstName: string;
-};
+const schema = z.object({
+  firstName: z.string().min(1, "First name should not be empty"),
+  lastName: z.string().min(1, "Last name should not be empty"),
+  email: z.email(),
+  password: z
+    .string()
+    .min(8)
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number"),
+  passwordConfirm: z.string().min(8),
+  city: z.string(),
+  state: z.string().min(1, "State should not be empty"),
+  zip: z
+    .string()
+    .min(4, "Zip code must be 4 digits")
+    .max(4, "Zip code must be 4 digits"),
+});
+
+export type FormType = z.infer<typeof schema>;
 
 function Form() {
-  const { register, handleSubmit } = useForm<FormType>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm<FormType>({ resolver: zodResolver(schema) });
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState<FormType | undefined>();
 
   const onSubmit: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+    const match = data.password === data.passwordConfirm;
+    if (!match) {
+      setError("passwordConfirm", {
+        type: "password",
+        message: "Password must match",
+      });
+      return;
+    }
+    setFormData(data);
+    setShowModal(true);
+    reset();
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
@@ -19,47 +57,73 @@ function Form() {
       <div className="form_names">
         <FormInput
           {...register("firstName")}
+          type="text"
           label="First Name"
-          placeholder="First Name"
+          placeholder="ex. Christopher"
+          error={errors.firstName?.message}
         />
         <FormInput
-          {...register("firstName")}
-          label="First Name"
-          placeholder="First Name"
+          {...register("lastName")}
+          type="text"
+          label="Last Name"
+          placeholder="ex. Calderon"
+          error={errors.lastName?.message}
         />
       </div>
 
       <FormInput
-        {...register("firstName")}
-        label="First Name"
-        placeholder="First Name"
+        {...register("email")}
+        type="text"
+        label="Email Address"
+        placeholder="ex. email@address.com"
+        error={errors.email?.message}
       />
       <FormInput
-        {...register("firstName")}
-        label="First Name"
-        placeholder="First Name"
+        {...register("password")}
+        type="password"
+        label="Password"
+        placeholder="Must contain at least 8 characters, 1 uppercase and 1 digit"
+        error={errors.password?.message}
+      />
+      <FormInput
+        {...register("passwordConfirm")}
+        type="password"
+        label="Confirm Password"
+        placeholder="Must contain at least 8 characters, 1 uppercase and 1 digit"
+        error={errors.passwordConfirm?.message}
       />
 
       <div className="form_location">
         <FormInput
-          {...register("firstName")}
-          label="First Name"
-          placeholder="First Name"
+          {...register("city")}
+          type="text"
+          label="City"
+          placeholder="ex. Santa Tecla"
         />
         <FormInput
-          {...register("firstName")}
-          label="First Name"
-          placeholder="First Name"
+          {...register("state")}
+          type="text"
+          label="State"
+          error={errors.state?.message}
+          placeholder="ex. La Libertad"
         />
         <FormInput
-          {...register("firstName")}
-          label="First Name"
-          placeholder="First Name"
+          {...register("zip")}
+          type="number"
+          label="Zip Code"
+          error={errors.zip?.message}
+          placeholder="4 digits"
         />
       </div>
 
-
       <button className="form_register">Register</button>
+      {showModal && formData && (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          data={formData}
+        />
+      )}
     </form>
   );
 }
