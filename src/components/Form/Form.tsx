@@ -3,6 +3,8 @@ import FormInput from "../FormInput/FormInput";
 import "./Form.scss";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name should not be empty"),
@@ -22,7 +24,7 @@ const schema = z.object({
     .max(4, "Zip code must be 4 digits"),
 });
 
-type FormType = z.infer<typeof schema>;
+export type FormType = z.infer<typeof schema>;
 
 function Form() {
   const {
@@ -32,6 +34,8 @@ function Form() {
     reset,
     setError,
   } = useForm<FormType>({ resolver: zodResolver(schema) });
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState<FormType | undefined>();
 
   const onSubmit: SubmitHandler<FormType> = (data) => {
     const match = data.password === data.passwordConfirm;
@@ -42,7 +46,8 @@ function Form() {
       });
       return;
     }
-    console.log(data);
+    setFormData(data);
+    setShowModal(true);
     reset();
   };
   return (
@@ -54,14 +59,14 @@ function Form() {
           {...register("firstName")}
           type="text"
           label="First Name"
-          placeholder="Christopher"
+          placeholder="ex. Christopher"
           error={errors.firstName?.message}
         />
         <FormInput
           {...register("lastName")}
           type="text"
           label="Last Name"
-          placeholder="Calderon"
+          placeholder="ex. Calderon"
           error={errors.lastName?.message}
         />
       </div>
@@ -70,7 +75,7 @@ function Form() {
         {...register("email")}
         type="text"
         label="Email Address"
-        placeholder="email@address.com"
+        placeholder="ex. email@address.com"
         error={errors.email?.message}
       />
       <FormInput
@@ -89,13 +94,18 @@ function Form() {
       />
 
       <div className="form_location">
-        <FormInput {...register("city")} type="text" label="City" placeholder="Santa Tecla" />
+        <FormInput
+          {...register("city")}
+          type="text"
+          label="City"
+          placeholder="ex. Santa Tecla"
+        />
         <FormInput
           {...register("state")}
           type="text"
           label="State"
           error={errors.state?.message}
-          placeholder="La Libertad"
+          placeholder="ex. La Libertad"
         />
         <FormInput
           {...register("zip")}
@@ -107,6 +117,13 @@ function Form() {
       </div>
 
       <button className="form_register">Register</button>
+      {showModal && formData && (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          data={formData}
+        />
+      )}
     </form>
   );
 }

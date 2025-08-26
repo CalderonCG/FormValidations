@@ -5,8 +5,8 @@
     @include m.flexCenter(row,center);
 
     position: absolute;
-    top: 2rem;
-    left: 2rem;
+    top: 3rem;
+    right: 3rem;
     display: flex;
     border: none;
     background-color: transparent;
@@ -14,11 +14,11 @@
     
     .icon_moon{
         color: var(--primary);
-        font-size: 2rem;
+        font-size: 3rem;
     }
 
     .icon_sun{
         color: white;
-        font-size: 2rem;
+        font-size: 3rem;
     }
 }
