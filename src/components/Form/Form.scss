@@ -11,6 +11,12 @@
   padding: 2rem 3rem;
   color: var(--font);
 
+  @media (max-width: 730px) {
+    width: 100%;
+    padding: 4rem 1rem;
+
+  }
+
   &_label {
     width: 100%;
     display: flex;
@@ -27,6 +33,11 @@
     grid-template-columns: 1fr 1fr;
     width: 100%;
     gap: 2rem;
+
+    @media (max-width: 730px){
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &_location {
@@ -34,6 +45,11 @@
     grid-template-columns: 1fr 1fr 7rem;
     width: 100%;
     gap: 1rem;
+    @media (max-width: 730px){
+      display: flex;
+      flex-direction: column;
+    }
+
   }
 
   &_register {
@@ -44,5 +60,6 @@
     padding: 1rem;
     font-weight: 700;
     border-radius: 0.25rem;
+
   }
 }

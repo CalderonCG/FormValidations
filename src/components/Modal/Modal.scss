@@ -26,6 +26,18 @@
   color: var(--font);
   z-index: 100;
 
+  @media (max-width: 730px) {
+    
+  @include m.flexCenter(column, center);
+    bottom: 0%;
+    left: 0%;
+    top: auto;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+    transform: none;
+  }
+
   p{
     text-align: center;
   }
